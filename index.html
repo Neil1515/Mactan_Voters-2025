@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mactan Voters Table</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="short icon" type="x-icon" href="image/deretso-logo.png">
+
+    <!-- Bootstrap and Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container my-3">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-dark">Mactan Voters List 2025</h3>
+    </div>
+    <!-- Search Input -->
+    <div class="row mb-2">
+        <div class="col-md-4">
+            <input type="text" id="liveSearch" class="form-control" placeholder="Search by name or precinct">
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Precinct Number</th>
+                    <th>Cluster Number</th>
+                </tr>
+            </thead>
+            <tbody id="excelData"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SheetJS -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    async function loadExcelFromServer(url) {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        const tbody = document.getElementById('excelData');
+        tbody.innerHTML = '';
+
+        data.slice(1).forEach((row, index) => {
+            if (row.length >= 3) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        });
+    }
+
+    // Load Excel on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
+    });
+
+    // Live Search
+    document.getElementById('liveSearch').addEventListener('input', function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#excelData tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? '' : 'none';
+        });
+    });
+</script>
+
+</body>
+</html>
