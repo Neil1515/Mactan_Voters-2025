@@ -30,6 +30,41 @@
                 font-size: 0.9rem;
             }
         }
+
+        .modal-content {
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+        background-color: #198754;
+        color: white;
+        justify-content: center;
+        border-bottom: none;
+    }
+
+    .modal-title {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .modal-body img {
+        border-radius: 0.5rem;
+        max-height: 400px;
+        object-fit: cover;
+    }
+
+    .modal-footer {
+        justify-content: center;
+        border-top: none;
+    }
+
+    .btn-success {
+        padding: 0.6rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 2rem;
+    }
     </style>  
 </head>
 <body>  
@@ -44,11 +79,32 @@
         <div class="col-md-4 mt-2">
             <input type="text" id="liveSearch" class="form-control" placeholder="Search by name or precinct">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 mt-2">
             <h3 class="text-dark mb-0">Mactan Voters List 2025</h3>
         </div>
     </div>
     
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+    
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">#6 Rogelio Pelonio Aying</h5>
+                </div>
+    
+                <div class="modal-body text-center p-4">
+                    <img src="image/modal-rayingNumber6.jpg" class="img-fluid" alt="Rogelio Pelonio Aying">
+                </div>
+    
+                <div class="modal-footer pb-4">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                        Vote Rogelio
+                    </button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
 
     <div class="table-responsive" style="max-height: 80vh; overflow-y: auto;">
         <table class="table table-bordered table-sm mb-0">
@@ -125,6 +181,15 @@
     document.addEventListener('DOMContentLoaded', function () {
         loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
         document.getElementById('liveSearch').addEventListener('input', handleSearch);
+    });
+
+    // Wait for DOM to load before starting the interval
+    document.addEventListener('DOMContentLoaded', function () {
+        // Show modal every 30 seconds (30,000 ms)
+        setInterval(function () {
+            var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
+            myModal.show();
+        }, 30000); // 30000 ms = 30 seconds
     });
 </script>
 </body>
