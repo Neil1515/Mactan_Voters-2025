@@ -183,14 +183,21 @@
         document.getElementById('liveSearch').addEventListener('input', handleSearch);
     });
 
-    // Wait for DOM to load before starting the interval
     document.addEventListener('DOMContentLoaded', function () {
-        // Show modal every 30 seconds (30,000 ms)
-        setInterval(function () {
+        // First show after 1 minute (60,000 ms)
+        setTimeout(function () {
             var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
             myModal.show();
-        }, 120000 ); // 120000 ms = 2 mins
+
+            // Then show every 5 minutes (300,000 ms)
+            setInterval(function () {
+                var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
+                myModal.show();
+            }, 120000); // 2 mins in ms
+
+        }, 30000); // 30sec in ms
     });
+
 </script>
 </body>
 </html>
