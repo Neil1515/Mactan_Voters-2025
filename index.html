@@ -98,10 +98,9 @@
     
                 <div class="modal-footer pb-4">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">
-                        Vote Rogelio
+                        Vote Rogelio Aying
                     </button>
                 </div>
-    
             </div>
         </div>
     </div>
@@ -184,20 +183,24 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        // First show after 1 minute (60,000 ms)
-        setTimeout(function () {
-            var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
-            myModal.show();
+        const modalElement = document.getElementById('previewModal');
+        const myModal = new bootstrap.Modal(modalElement);
 
-            // Then show every 5 minutes (300,000 ms)
-            setInterval(function () {
-                var myModal = new bootstrap.Modal(document.getElementById('previewModal'));
+        function showModalIfHidden() {
+            // Check if modal is already shown
+            if (!modalElement.classList.contains('show')) {
                 myModal.show();
-            }, 120000); // 2 mins in ms
+            }
+        }
 
-        }, 30000); // 30sec in ms
+        // Show the first modal after 1 minute
+        setTimeout(function () {
+            showModalIfHidden();
+
+            // Then show every 2 minutes
+            setInterval(showModalIfHidden, 120000); // 2 minutes
+        }, 60000); // 1 minute
     });
-
 </script>
 </body>
 </html>
