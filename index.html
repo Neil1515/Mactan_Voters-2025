@@ -1,228 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mactan Voters - Deretso sa Mayo</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="image/deretso-logo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        table td, table th {
-            font-size: 0.9rem;
-            word-break: break-word;
-            white-space: normal;
-        }
-        #loadingSpinner {
-            transition: opacity 0.4s ease;
-        }
+  <meta charset="UTF-8">
+  <title>Mactan Voters - Deretso sa Mayo 2025</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="image/deretso-logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    table td, table th {
+      font-size: 0.9rem;
+      word-break: break-word;
+      white-space: normal;
+    }
 
-        .highlight-row {
-            background-color: #ffc107 !important;
-            animation: fadeHighlight 1s ease-in-out;
-        }
+    #loadingSpinner {
+      transition: opacity 0.4s ease;
+    }
 
-        @keyframes fadeHighlight {
-            from { background-color: #fff3cd; }
-            to { background-color: #ffc107; }
-        }
+    .highlight-row {
+      background-color: #ffc107 !important;
+      animation: fadeHighlight 1s ease-in-out;
+    }
 
-        @media screen and (max-width: 780px) {
-            table td, table th {
-                font-size: 0.75rem;
-            }
-            h3 {
-                font-size: 1.2rem;
-            }
-            #liveSearch {
-                font-size: 0.9rem;
-            }
-        }
-        .modal-content {
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        .modal-header {
-            background-color: #198754;
-            color: white;
-            justify-content: center;
-            border-bottom: none;
-        }
-        .modal-title {
-            font-weight: bold;
-            font-size: 1.3rem;
-        }
-        .modal-body img {
-            border-radius: 0.5rem;
-            max-height: 400px;
-            object-fit: cover;
-        }
-        .modal-footer {
-            justify-content: center;
-            border-top: none;
-        }
-        .btn-success {
-            padding: 0.6rem 1.5rem;
-            font-size: 1.1rem;
-            border-radius: 2rem;
-        }
-    </style>  
+    @keyframes fadeHighlight {
+      from { background-color: #fff3cd; }
+      to { background-color: #ffc107; }
+    }
+
+    @media screen and (max-width: 780px) {
+      table td, table th {
+        font-size: 0.7rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      #liveSearch {
+        font-size: 0.9rem;
+      }
+    }
+
+    .modal-content {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      background-color: #198754;
+      color: white;
+      justify-content: center;
+      border-bottom: none;
+    }
+
+    .modal-title {
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .modal-body img {
+      border-radius: 0.5rem;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
+    .modal-footer {
+      justify-content: center;
+      border-top: none;
+    }
+
+    .btn-success {
+      padding: 0.6rem 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 2rem;
+    }
+  </style>
 </head>
-<body>  
+<body>
 <div class="container my-3">
-    <div class="container-fluid p-0">
-        <img src="image/header-deretsoTeam.jpg" alt="Header Image" class="img-fluid w-100" style="max-height: 360px; object-fit: cover;">
-    </div>
-    <div class="row mb-2 align-items-center">
-        <div class="col-md-4 mt-2 d-flex gap-2">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by name or precinct">
-            <button type="button" id="searchButton" class="btn btn-primary">Search</button>
-        </div>
-        
-        <div class="col-md-8 mt-2">
-            <h3 class="text-dark mb-0">Mactan Voters List 2025</h3>
-        </div>
-    </div>
-    
-    <audio id="background-music" autoplay loop>
-        <source src="ThemeSong/The-PDP-Laban-Song2025.mp3" type="audio/mpeg">
-    </audio>    
+  <div class="container-fluid p-0">
+    <img src="image/header-deretsoTeam.jpg" alt="Header Image" class="img-fluid w-100" style="max-height: 360px; object-fit: cover;">
+  </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="previewModalLabel">#6 Rogelio Pelonio Aying</h5>
-                </div>
-                <div class="modal-body text-center p-4">
-                    <img src="image/modal-rayingNumber6.jpg" class="img-fluid" alt="Rogelio Pelonio Aying">
-                </div>
-                <div class="modal-footer pb-4">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Vote Rogelio Aying</button>
-                </div>
-            </div>
-        </div>
+  <div class="row mb-2 align-items-center">
+    <div class="col-md-4 mt-2 d-flex gap-2">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search by name or precinct">
+      <button type="button" id="searchButton" class="btn btn-primary">Search</button>
     </div>
 
-    <!-- Table -->
-    <div class="table-responsive" style="max-height: 80vh; overflow-y: auto;">
-        <table class="table table-bordered table-sm mb-0">
-            <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Precinct #</th>
-                    <th>Cluster #</th>
-                </tr>
-            </thead>
-            <tbody id="excelData"></tbody>
-        </table>
+    <div class="col-md-8 mt-2">
+      <h3 class="text-dark mb-0">Mactan Voters List 2025</h3>
     </div>
+  </div>
 
-    <!-- Spinner -->
-    <div id="loadingSpinner" class="text-center my-4">
-        <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
+  <audio id="background-music" autoplay loop>
+    <source src="ThemeSong/The-PDP-Laban-Song2025.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Modal -->
+  <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="previewModalLabel">#6 Rogelio Pelonio Aying</h5>
         </div>
-        <div class="mt-2 text-success">Loading voters data...</div>
+        <div class="modal-body text-center p-4">
+          <img src="image/modal-rayingNumber6.jpg" class="img-fluid" alt="Rogelio Pelonio Aying">
+        </div>
+        <div class="modal-footer pb-4">
+          <button type="button" class="btn btn-success" id="voteButton" data-bs-dismiss="modal">Vote Rogelio Aying</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive" style="max-height: 80vh; overflow-y: auto;">
+    <table class="table table-bordered table-sm mb-0">
+      <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Precinct #</th>
+          <th>Cluster #</th>
+        </tr>
+      </thead>
+      <tbody id="excelData"></tbody>
+    </table>
+  </div>
+
+  <!-- Spinner -->
+  <div id="loadingSpinner" class="text-center my-4">
+    <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="mt-2 text-success">Loading voters data...</div>
+  </div>
+</div>
+
+<!-- Toast Notification (Side Message) -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  <div id="voteToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Salamat sa pagbotar kang Rogelio Aying! Dako kaayong tabang ang imong suporta. 😊
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    let allRows = [];
+  let allRows = [];
 
-    async function loadExcelFromServer(url) {
-        const response = await fetch(url);
-        const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+  async function loadExcelFromServer(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-        allRows = data.slice(1).filter(row => row.length >= 3);
+    allRows = data.slice(1).filter(row => row.length >= 3);
+    document.getElementById('loadingSpinner').style.display = 'none';
+    renderTable(allRows);
+  }
 
-        // Hide loading spinner
-        document.getElementById('loadingSpinner').style.display = 'none';
+  function renderTable(rows, highlightFirst = false) {
+    const tbody = document.getElementById('excelData');
+    tbody.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-        renderTable(allRows);
-    }
+    rows.forEach((row, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${row[0]}</td>
+        <td>${row[1]}</td>
+        <td>${row[2]}</td>
+      `;
+      if (highlightFirst && index === 0) {
+        tr.classList.add('highlight-row');
+      }
+      fragment.appendChild(tr);
+    });
 
-    function renderTable(rows, highlightFirst = false) {
-        const tbody = document.getElementById('excelData');
-        tbody.innerHTML = '';
-        const fragment = document.createDocumentFragment();
+    tbody.appendChild(fragment);
+  }
 
-        rows.forEach((row, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${row[0]}</td>
-                <td>${row[1]}</td>
-                <td>${row[2]}</td>
-            `;
+  function handleButtonSearch() {
+    const spinner = document.getElementById('loadingSpinner');
+    spinner.style.display = 'block';
 
-            if (highlightFirst && index === 0) {
-                tr.classList.add('highlight-row');
-            }
+    setTimeout(() => {
+      const filter = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allRows.filter(row =>
+        (row[0] && row[0].toLowerCase().includes(filter)) ||
+        (row[1] && row[1].toLowerCase().includes(filter)) ||
+        (row[2] && row[2].toLowerCase().includes(filter))
+      );
 
-            fragment.appendChild(tr);
-        });
+      renderTable(filtered, true);
+      spinner.style.display = 'none';
+    }, 300);
+  }
 
-        tbody.appendChild(fragment);
-    }
-
-    function handleButtonSearch() {
-        const filter = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = allRows.filter(row =>
-            (row[0] && row[0].toLowerCase().includes(filter)) ||
-            (row[1] && row[1].toLowerCase().includes(filter)) ||
-            (row[2] && row[2].toLowerCase().includes(filter))
-        );
-        renderTable(filtered, true);
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
     document.getElementById('searchButton').addEventListener('click', handleButtonSearch);
 
-    // Enter key support
     document.getElementById('searchInput').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('searchButton').click();
-        }
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('searchButton').click();
+      }
     });
 
-    // Autoplay workaround
     document.body.addEventListener('click', function playAudioOnce() {
-        const audio = document.getElementById('background-music');
-        if (audio.paused) {
-            audio.play().catch(e => console.log('Autoplay blocked:', e));
-        }
-        document.body.removeEventListener('click', playAudioOnce);
+      const audio = document.getElementById('background-music');
+      if (audio.paused) {
+        audio.play().catch(e => console.log('Autoplay blocked:', e));
+      }
+      document.body.removeEventListener('click', playAudioOnce);
     });
 
-    // Modal logic
     const modalElement = document.getElementById('previewModal');
-    const myModal = new bootstrap.Modal(modalElement);
+    const myModal = new bootstrap.Modal(modalElement, {
+      backdrop: 'static',
+      keyboard: false
+    });
 
     function showModalIfHidden() {
-        if (!modalElement.classList.contains('show')) {
-            myModal.show();
-        }
+      if (!modalElement.classList.contains('show')) {
+        myModal.show();
+      }
     }
 
     setTimeout(() => {
-        showModalIfHidden();
-        setInterval(showModalIfHidden, 120000);
-    }, 60000);
-});
+      showModalIfHidden();
+      setInterval(showModalIfHidden, 60000);
+    }, 20000);
 
+    // Toast trigger
+    document.getElementById('voteButton').addEventListener('click', function () {
+      const voteToast = new bootstrap.Toast(document.getElementById('voteToast'));
+      voteToast.show();
+    });
+  });
 </script>
 
 </body>
