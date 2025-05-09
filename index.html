@@ -65,14 +65,20 @@
         <img src="image/header-deretsoTeam.jpg" alt="Header Image" class="img-fluid w-100" style="max-height: 360px; object-fit: cover;">
     </div>
     <div class="row mb-2 align-items-center">
-        <div class="col-md-4 mt-2">
-            <input type="text" id="liveSearch" class="form-control" placeholder="Search by name or precinct">
+        <div class="col-md-4 mt-2 d-flex gap-2">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name or precinct">
+            <button type="button" id="searchButton" class="btn btn-primary">Search</button>
         </div>
+        
         <div class="col-md-8 mt-2">
             <h3 class="text-dark mb-0">Mactan Voters List 2025</h3>
         </div>
     </div>
     
+    <audio id="background-music" autoplay loop>
+        <source src="ThemeSong/The-PDP-Laban-Song2025.mp3" type="audio/mpeg">
+    </audio>    
+
     <!-- Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -154,43 +160,54 @@
         tbody.appendChild(fragment);
     }
 
-    function debounce(func, delay) {
-        let timeout;
-        return function () {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, arguments), delay);
-        };
-    }
-
-    const handleSearch = debounce(function () {
-        const filter = this.value.toLowerCase();
+    function handleButtonSearch() {
+        const filter = document.getElementById('searchInput').value.toLowerCase();
         const filtered = allRows.filter(row =>
-            row[0].toLowerCase().includes(filter) ||
-            row[1].toLowerCase().includes(filter) ||
-            row[2].toLowerCase().includes(filter)
+            (row[0] && row[0].toLowerCase().includes(filter)) ||
+            (row[1] && row[1].toLowerCase().includes(filter)) ||
+            (row[2] && row[2].toLowerCase().includes(filter))
         );
         renderTable(filtered);
-    }, 200);
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
-        loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
-        document.getElementById('liveSearch').addEventListener('input', handleSearch);
+    loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
+    document.getElementById('searchButton').addEventListener('click', handleButtonSearch);
 
-        // Modal logic
-        const modalElement = document.getElementById('previewModal');
-        const myModal = new bootstrap.Modal(modalElement);
-
-        function showModalIfHidden() {
-            if (!modalElement.classList.contains('show')) {
-                myModal.show();
-            }
+    // Enter key support
+    document.getElementById('searchInput').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('searchButton').click();
         }
-
-        setTimeout(() => {
-            showModalIfHidden();
-            setInterval(showModalIfHidden, 120000); // every 2 minutes
-        }, 60000); // first show after 1 minute
     });
+
+    // Autoplay workaround
+    document.body.addEventListener('click', function playAudioOnce() {
+        const audio = document.getElementById('background-music');
+        if (audio.paused) {
+            audio.play().catch(e => console.log('Autoplay blocked:', e));
+        }
+        document.body.removeEventListener('click', playAudioOnce);
+    });
+
+    // Modal logic
+    const modalElement = document.getElementById('previewModal');
+    const myModal = new bootstrap.Modal(modalElement);
+
+    function showModalIfHidden() {
+        if (!modalElement.classList.contains('show')) {
+            myModal.show();
+        }
+    }
+
+    setTimeout(() => {
+        showModalIfHidden();
+        setInterval(showModalIfHidden, 120000);
+    }, 60000);
+});
+
 </script>
+
 </body>
 </html>
