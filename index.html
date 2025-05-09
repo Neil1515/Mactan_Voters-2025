@@ -17,6 +17,17 @@
         #loadingSpinner {
             transition: opacity 0.4s ease;
         }
+
+        .highlight-row {
+            background-color: #ffc107 !important;
+            animation: fadeHighlight 1s ease-in-out;
+        }
+
+        @keyframes fadeHighlight {
+            from { background-color: #fff3cd; }
+            to { background-color: #ffc107; }
+        }
+
         @media screen and (max-width: 780px) {
             table td, table th {
                 font-size: 0.75rem;
@@ -141,7 +152,7 @@
         renderTable(allRows);
     }
 
-    function renderTable(rows) {
+    function renderTable(rows, highlightFirst = false) {
         const tbody = document.getElementById('excelData');
         tbody.innerHTML = '';
         const fragment = document.createDocumentFragment();
@@ -154,6 +165,11 @@
                 <td>${row[1]}</td>
                 <td>${row[2]}</td>
             `;
+
+            if (highlightFirst && index === 0) {
+                tr.classList.add('highlight-row');
+            }
+
             fragment.appendChild(tr);
         });
 
@@ -167,7 +183,7 @@
             (row[1] && row[1].toLowerCase().includes(filter)) ||
             (row[2] && row[2].toLowerCase().includes(filter))
         );
-        renderTable(filtered);
+        renderTable(filtered, true);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
