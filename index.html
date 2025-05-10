@@ -8,76 +8,87 @@
   <link rel="icon" type="image/x-icon" href="image/deretso-logo.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    table td, table th {
-      font-size: 0.9rem;
-      word-break: break-word;
-      white-space: normal;
-    }
-
-    #loadingSpinner {
-      transition: opacity 0.4s ease;
-    }
-
-    .highlight-row {
-      background-color: #ffc107 !important;
-      animation: fadeHighlight 1s ease-in-out;
-    }
-
-    @keyframes fadeHighlight {
-      from { background-color: #fff3cd; }
-      to { background-color: #ffc107; }
-    }
-
-    @media screen and (max-width: 780px) {
+    <style>
       table td, table th {
-        font-size: 0.71rem;
-      }
-
-      h3 {
-        font-size: 1.2rem;
-      }
-
-      #liveSearch {
         font-size: 0.9rem;
+        word-break: break-word;
+        white-space: normal;
       }
-    }
 
-    .modal-content {
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    }
+      #loadingSpinner {
+        transition: opacity 0.4s ease;
+      }
 
-    .modal-header {
-      background-color: #198754;
-      color: white;
-      justify-content: center;
-      border-bottom: none;
-    }
+      .highlight-row {
+        background-color: #ffc107 !important;
+        animation: fadeHighlight 1s ease-in-out;
+      }
 
-    .modal-title {
-      font-weight: bold;
-      font-size: 1.3rem;
-    }
+      .p-4 {
+        padding: 1.5rem 1rem 0rem 1rem !important;
+      }
+      .pb-4{
+        padding: 0rem 1rem 1.5rem 1rem !important;
+      }
+      @keyframes fadeHighlight {
+        from { background-color: #fff3cd; }
+        to { background-color: #ffc107; }
+      }
 
-    .modal-body img {
-      border-radius: 0.5rem;
-      max-height: 400px;
-      object-fit: cover;
-    }
+      @media screen and (max-width: 780px) {
+        table td, table th {
+          font-size: 0.71rem;
+        }
 
-    .modal-footer {
-      justify-content: center;
-      border-top: none;
-    }
+        .table-responsive {
+          max-height: 20vh;
+        }
 
-    .btn-success {
-      padding: 0.6rem 1.5rem;
-      font-size: 1.1rem;
-      border-radius: 2rem;
-    }
-  </style>
+        h3 {
+          font-size: 1.2rem;
+        }
+
+        #liveSearch {
+          font-size: 0.9rem;
+        }
+
+      }
+
+      .modal-content {
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-header {
+        background-color: #198754;
+        color: white;
+        justify-content: center;
+        border-bottom: none;
+      }
+
+      .modal-title {
+        font-weight: bold;
+        font-size: 1.3rem;
+      }
+
+      .modal-body img {
+        border-radius: 0.5rem;
+        max-height: 400px;
+        object-fit: cover;
+      }
+
+      .modal-footer {
+        justify-content: center;
+        border-top: none;
+      }
+
+      .btn-success {
+        padding: 0.6rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 2rem;
+      }
+    </style>
 </head>
 <body>
 <div class="container my-3">
@@ -87,7 +98,7 @@
 
   <div class="row mb-2 align-items-center">
     <div class="col-md-4 mt-2 d-flex gap-2">
-      <input type="text" id="searchInput" class="form-control" placeholder="Search by name or precinct">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search by name or precinct" required>
       <button type="button" id="searchButton" class="btn btn-primary">Search</button>
     </div>
 
@@ -100,22 +111,24 @@
     <source src="ThemeSong/The-PDP-Laban-Song2025.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Modal -->
-  <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="previewModalLabel">#6 Rogelio Pelonio Aying</h5>
-        </div>
-        <div class="modal-body text-center p-4">
-          <img src="image/modal-rayingNumber6.jpg" class="img-fluid" alt="Rogelio Pelonio Aying">
-        </div>
-        <div class="modal-footer pb-4">
-          <button type="button" class="btn btn-success" id="voteButton" data-bs-dismiss="modal">Vote Rogelio Aying</button>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewModalLabel">#6 Rogelio Pelonio Aying</h5>
+      </div>
+      <div class="modal-body text-center p-4">
+        <img src="image/modal-rayingNumber6.jpg" class="img-fluid" alt="Rogelio Pelonio Aying">
+        <p class="mt-3 fw-semibold">"Alang sa mas maayong Lapu-Lapu, andam ko moalagad"</p>
+      </div>
+      <div class="modal-footer pb-4">
+        <button type="button" class="btn btn-success" id="voteButton" data-bs-dismiss="modal">Vote Rogelio Aying</button>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Table -->
   <div class="table-responsive" style="max-height: 80vh; overflow-y: auto;">
@@ -152,6 +165,29 @@
     </div>
   </div>
 </div>
+
+<!-- Warning Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  <div id="warnToast" class="toast align-items-center text-white bg-warning border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Please enter a name or precinct before searching.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-0">
+  <div class="container">
+    <p class="mb-1">Wala pa ang inyong barangay?</p>
+    <p class="mb-2">Kontaka ang developer aron ipa-apil ang inyong Brgy.</p>
+    <a href="https://m.me/naix215" target="_blank" class="text-warning text-decoration-none">
+      <i class="fab fa-facebook-messenger"></i> Contact Developer via Messenger
+    </a>
+  </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -194,11 +230,20 @@
   }
 
   function handleButtonSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const filter = searchInput.value.trim().toLowerCase();
+
+    if (filter === "") {
+      const warnToast = new bootstrap.Toast(document.getElementById('warnToast'));
+      warnToast.show();
+      searchInput.focus();
+      return;
+    }
+
     const spinner = document.getElementById('loadingSpinner');
     spinner.style.display = 'block';
 
     setTimeout(() => {
-      const filter = document.getElementById('searchInput').value.toLowerCase();
       const filtered = allRows.filter(row =>
         (row[0] && row[0].toLowerCase().includes(filter)) ||
         (row[1] && row[1].toLowerCase().includes(filter)) ||
@@ -209,6 +254,7 @@
       spinner.style.display = 'none';
     }, 300);
   }
+
 
   document.addEventListener('DOMContentLoaded', function () {
     loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
