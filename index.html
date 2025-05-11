@@ -107,9 +107,8 @@
     </div>
   </div>
 
-  <audio id="background-music" autoplay loop>
-    <source src="ThemeSong/The-PDP-Laban-Song2025.mp3" type="audio/mpeg">
-  </audio>
+<audio id="background-music" autoplay></audio>
+
 
 <!-- Modal -->
 <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
@@ -181,13 +180,14 @@
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-0">
   <div class="container">
-    <p class="mb-1">Wala pa ang inyong barangay?</p>
-    <p class="mb-2">Kontaka ang developer aron ipa-apil ang inyong Brgy.</p>
+    <p class="mb-1">Para sa election 2025</p>
+    <p class="mb-2" id="songMessage"></p> <!-- This gets updated -->
     <a href="https://m.me/naix215" target="_blank" class="text-warning text-decoration-none">
-      <i class="fab fa-facebook-messenger"></i> Contact Developer via Messenger
+      <i class="fab fa-facebook-messenger"></i> Any Concern Contact Me via Messenger
     </a>
   </div>
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -255,7 +255,6 @@
     }, 300);
   }
 
-
   document.addEventListener('DOMContentLoaded', function () {
     loadExcelFromServer('Voters-Data/mactan_voters_export.xlsx');
     document.getElementById('searchButton').addEventListener('click', handleButtonSearch);
@@ -267,13 +266,38 @@
       }
     });
 
+    // Music play logic
+    const audio = document.getElementById('background-music');
+    const songs = [
+      'ThemeSong/the-Deretso-teamSong2025.mp3',
+      'ThemeSong/The-PDP-Laban-Song2025.mp3'
+    ];
+
+    const songTitles = {
+      'ThemeSong/the-Deretso-teamSong2025.mp3': '🎵 Deretso Team Song 2025',
+      'ThemeSong/The-PDP-Laban-Song2025.mp3': '🎵 PDP Laban Theme 2025'
+    };
+
+    function playRandomSong() {
+      const nextSong = songs[Math.floor(Math.random() * songs.length)];
+      audio.src = nextSong;
+      audio.play().catch(err => console.log('Playback failed:', err));
+
+      // Update footer message
+      const message = songTitles[nextSong] || 'Now Playing...';
+      document.getElementById('songMessage').textContent = `Now Playing: ${message}`;
+    }
+
+    // Play the song when user interacts with the page
     document.body.addEventListener('click', function playAudioOnce() {
-      const audio = document.getElementById('background-music');
       if (audio.paused) {
-        audio.play().catch(e => console.log('Autoplay blocked:', e));
+        playRandomSong();
       }
       document.body.removeEventListener('click', playAudioOnce);
     });
+
+    // When the current song ends, play another random one
+    audio.addEventListener('ended', playRandomSong);
 
     const modalElement = document.getElementById('previewModal');
     const myModal = new bootstrap.Modal(modalElement, {
@@ -289,16 +313,17 @@
 
     setTimeout(() => {
       showModalIfHidden();
-      setInterval(showModalIfHidden, 60000);
-    }, 20000);
+      setInterval(showModalIfHidden, 120000); // 2 minutes interval
+    }, 30000);
 
-    // Toast trigger
+    // Toast trigger for vote action
     document.getElementById('voteButton').addEventListener('click', function () {
       const voteToast = new bootstrap.Toast(document.getElementById('voteToast'));
       voteToast.show();
     });
   });
 </script>
+
 
 </body>
 </html>
